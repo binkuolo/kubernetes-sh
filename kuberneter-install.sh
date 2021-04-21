@@ -253,7 +253,7 @@ fi
 
 # ------------------------------------kubectl completion bash ---------------------------------------
 echo "source <(kubectl completion bash)" >>~/.bashrc
-source .bashrc
+source ~/.bashrc
 if test $?; then
   log_success "kubectl completion bash ok "
 else
