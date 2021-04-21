@@ -23,7 +23,7 @@ Centos-7.6-x86_64-DVD-1810 + kubernetes1.19.4 + docker-ce-19.03.9 + calico
 5.  `set kube-api IP default 192.168.3.200` 输入kubeadm api IP 相当于设置--apiserver-advertise-address参数值 主节点必须设置否则退出安装脚本
 6.  如果是主节点 脚本自动开启了ipvs模式  你不需要再做什么 节点正常后你可以通过ipvsadm -ln命令查看到具体状态
 7.  如果是master节点脚本执行成功后 会在当前目录生产一个kubernetes-init.log文件 里面有子节点加入的token和命令
-8.  kubeactl 命令补全提示在脚本执行完毕之后 在你的终端执行 source .bashrc 即可
+8.  kubectl 命令补全提示在脚本执行完毕之后 在你的终端执行 source .bashrc 即可
 
 #### 参与贡献
 
