@@ -21,6 +21,7 @@ Centos-7.6-x86_64-DVD-1810 + kubernetes1.19.4 + docker-ce-19.03.9 + calico
 3.  `this hostname is k8s-master [y/n]？` 确定要设置就输入y 其他操作退出安装程序
 4.  `this node is master-node? [y/n] default no？` 输入y设置为主节点 输入其他都视为非主节点 非主节点将不初始化kubeadm
 4.  `set kube-api IP default 192.168.3.200` 输入kubeadm api IP 相当于设置--apiserver-advertise-address参数值 主节点必须设置否则退出安装脚本
+4.  如果是主节点 脚本自动开启了ipvs模式  你不需要再做什么 节点正常后你可以通过ipvsadm -ln命令查看到具体状态
 
 #### 参与贡献
 
