@@ -1,8 +1,8 @@
 # k8s-auto
 
 #### 介绍
-Kubernetes 自动安装部署脚本 一切都自动化都是为了懒惰都人类😄
-
+Kubernetes 自动安装部署脚本 一切都自动化都是为了懒惰都人类😄  
+最重要的一点 切勿在生产环境执行 除非你和你boss的关系非常铁
 #### 软件架构
 Centos-7.6-x86_64-DVD-1810 + kubernetes1.19.4 + docker-ce-19.03.9 + calico
 
