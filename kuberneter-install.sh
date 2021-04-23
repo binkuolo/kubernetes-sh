@@ -236,7 +236,7 @@ fi
 
 # ------------------------------------time synchronization ------------------------------------------
 log_info "yum install ntpdate..."
-yum install ntpdate
+yum install -y ntpdate
 if test $?; then
   log_success "install ntpdate ok "
 else
