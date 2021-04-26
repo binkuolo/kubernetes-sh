@@ -176,18 +176,18 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 }
 EOF
 
-sudo systemctl daemon-reload
-if test $?; then
-  log_success "daemon-reload ok "
-else
-  log_fail "daemon-reload fail"
-fi
+## sudo systemctl daemon-reload
+## if test $?; then
+##  log_success "daemon-reload ok "
+## else
+##   log_fail "daemon-reload fail"
+## fi
 
-sudo systemctl restart docker
+sudo systemctl reload docker
 if test $?; then
-  log_success "restart docker ok "
+  log_success "reload docker ok "
 else
-  log_fail "restart docker fail"
+  log_fail "reload docker fail"
 fi
 
 # ------------------------------------docker network iptables forward service -----------------------
