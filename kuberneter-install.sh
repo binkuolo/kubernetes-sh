@@ -176,12 +176,12 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 }
 EOF
 
-## sudo systemctl daemon-reload
-## if test $?; then
-##  log_success "daemon-reload ok "
-## else
-##   log_fail "daemon-reload fail"
-## fi
+sudo systemctl daemon-reload
+if test $?; then
+ log_success "daemon-reload ok "
+else
+  log_fail "daemon-reload fail"
+fi
 
 sudo systemctl reload docker
 if test $?; then
