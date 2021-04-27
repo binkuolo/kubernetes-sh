@@ -34,10 +34,8 @@ fi
 read -p "this node is master-node? [y/n] default no " IS_MASTER
 if test "$IS_MASTER" = "y"; then
   read -p "set kube-api IP default 192.168.3.200 " KUBE_API_IP
-  if test ! -n "$KUBE_API_IP"; then
+  if test -z "$KUBE_API_IP"; then
     KUBE_API_IP="192.168.3.200"
-  else
-    log_error "kube-api Cannot be empty！program exit ..."
   fi
 fi
 log_info "setting hostname is $HOST_NAME"
