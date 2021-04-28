@@ -99,6 +99,9 @@ if test $?; then
 else
   log_error "ipvs load fail"
 fi
+# ------------------------------------install epel-release  -----------------------------------------
+log_info "install epel-release ... "
+yum install -y epel-release
 
 # ------------------------------------install ipset ipvsadm -----------------------------------------
 log_info "install ipset ipvsadm ... "
@@ -174,14 +177,14 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 }
 EOF
 
-sudo systemctl daemon-reload
-if test $?; then
- log_success "daemon-reload ok "
-else
-  log_fail "daemon-reload fail"
-fi
+# sudo systemctl daemon-reload
+# if test $?; then
+#  log_success "daemon-reload ok "
+# else
+#   log_fail "daemon-reload fail"
+# fi
 
-sudo systemctl reload docker
+sudo systemctl restart docker
 if test $?; then
   log_success "reload docker ok "
 else
@@ -285,20 +288,19 @@ kind: KubeProxyConfiguration
 featureGates:
   SupportIPVSProxyMode: true
 mode: ipvs
----
-apiVersion: kubelet.config.k8s.io/v1beta1
-kind: KubeletConfiguration
-cgroupDriver: systemd
 EOF
   
   log_info "kubeadm init..."
-  kubeadm init --config kubeadm-config.yaml >&1 | tee init.log
+  kubeadm init --config kubeadm-config.yaml >&1 | tee ~/kubeadm-init.log
   if test $?; then
     log_success "kubeadm init ok "
   else
     log_fail "kubeadm init fail"
   fi
   echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bashrc
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
   # ------------------------------------kube-proxy-calico --------------------------------------------------
   log_info "apply kube-proxy..."
   kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
