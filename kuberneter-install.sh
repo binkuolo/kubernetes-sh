@@ -212,12 +212,12 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 
 # ------------------------------------install kubernetes --------------------------------------------
-log_info "install kubelet-1.19.4 kubeadm-1.19.4 kubectl-1.19.4..."
-yum install -y kubelet-1.19.4 kubeadm-1.19.4 kubectl-1.19.4
+log_info "install kubelet-1.20.4 kubeadm-1.20.4 kubectl-1.20.4..."
+yum install -y kubelet-1.20.4 kubeadm-1.20.4 kubectl-1.20.4
 if test $?; then
-  log_success "install kubelet-1.19.4 kubeadm-1.19.4 kubectl-1.19.4 ok "
+  log_success "install kubelet-1.20.4 kubeadm-1.20.4 kubectl-1.20.4 ok "
 else
-  log_fail "install kubelet-1.19.4 kubeadm-1.19.4 kubectl-1.19.4 fail"
+  log_fail "install kubelet-1.20.4 kubeadm-1.20.4 kubectl-1.20.4 fail"
 fi
 systemctl enable kubelet
 if test $?; then
@@ -275,7 +275,7 @@ nodeRegistration:
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 imageRepository: registry.aliyuncs.com/google_containers
-kubernetesVersion: v1.19.4
+kubernetesVersion: v1.20.4
 networking:
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
@@ -285,18 +285,20 @@ kind: KubeProxyConfiguration
 featureGates:
   SupportIPVSProxyMode: true
 mode: ipvs
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd
 EOF
-
+  
   log_info "kubeadm init..."
-  kubeadm init --config kubeadm-config.yaml >&1 | tee kubernetes-init.log
+  kubeadm init --config kubeadm-config.yaml >&1 | tee init.log
   if test $?; then
     log_success "kubeadm init ok "
   else
     log_fail "kubeadm init fail"
   fi
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bashrc
   # ------------------------------------kube-proxy-calico --------------------------------------------------
   log_info "apply kube-proxy..."
   kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
