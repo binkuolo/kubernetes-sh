@@ -297,7 +297,8 @@ EOF
   else
     log_fail "kubeadm init fail"
   fi
-  echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bashrc
+  echo export KUBECONFIG=/etc/kubernetes/admin.conf >> /etc/bashrc
+  source /etc/bashrc
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
