@@ -291,8 +291,8 @@ EOF
   else
     log_fail "kubeadm init fail"
   fi
-  echo export KUBECONFIG=/etc/kubernetes/admin.conf >> /etc/bashrc
-  source /etc/bashrc
+  echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bash_profile
+  source ~/.bash_profile
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -304,8 +304,6 @@ EOF
   else
     log_fail "kube-proxy install fail"
   fi
-  # 重启网络组件
-  kubectl -n kube-system delete pods -l k8s-app=kube-proxy
   exit
 fi
 exit
