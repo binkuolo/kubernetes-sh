@@ -282,6 +282,11 @@ kubernetesVersion: v1.20.4
 networking:
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+clusterCIDR: "10.244.0.0/16"
+mode: "ipvs"
 EOF
   
   log_info "kubeadm init..."
@@ -292,7 +297,7 @@ EOF
     log_fail "kubeadm init fail"
   fi
   echo export KUBECONFIG=/etc/kubernetes/admin.conf >> ~/.bash_profile
-  source ~/.bash_profile
+  $source ~/.bash_profile
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
