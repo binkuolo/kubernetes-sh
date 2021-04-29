@@ -261,10 +261,20 @@ else
   log_fail "kubectl completion bash fail"
 fi
 
-# ------------------------------------kubeadm init --------------------------------------------------
+# ------------------------------------kubeadm init config--------------------------------------------
+
 if test "$IS_MASTER" = "y"; then
   log_info "create kubeadm-config.yaml..."
   cat >kubeadm-config.yaml <<EOF
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+failSwapOn: false
+#禁用swap检测
+cgroupDriver: systemd
+#修改driver为systemd
+#rotateCertificates: true
+# 开启证书轮询
+---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 localAPIEndpoint:
