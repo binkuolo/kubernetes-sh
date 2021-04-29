@@ -282,12 +282,6 @@ kubernetesVersion: v1.20.4
 networking:
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
----
-apiVersion: kubeproxy.config.k8s.io/v1alpha1
-kind: KubeProxyConfiguration
-featureGates:
-  SupportIPVSProxyMode: true
-mode: ipvs
 EOF
   
   log_info "kubeadm init..."
@@ -310,6 +304,8 @@ EOF
   else
     log_fail "kube-proxy install fail"
   fi
+  # 重启网络组件
+  kubectl -n kube-system delete pods -l k8s-app=kube-proxy
   exit
 fi
 exit
