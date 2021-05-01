@@ -294,7 +294,7 @@ networking:
   serviceSubnet: 10.96.0.0/12
 # apiServer:
 #   extraArgs:
-#     service-node-port-range: "1-655365"
+#     service-node-port-range: "1-65535"
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
