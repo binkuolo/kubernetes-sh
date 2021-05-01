@@ -292,6 +292,9 @@ kubernetesVersion: v1.20.4
 networking:
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
+# apiServer:
+#   extraArgs:
+#     service-node-port-range: "1-65535"
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration

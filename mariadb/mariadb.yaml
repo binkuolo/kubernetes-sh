@@ -1,0 +1,71 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: db-pv
+spec:
+  accessModes:
+    - ReadWriteOnce        #访问模式定义为只能以读写的方式挂载到单个节点 如果存储要多节点使用 此处应改为ReadWriteMany
+  capacity:
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: db-storage
+  nfs:
+    path: /nfsdata/mariadb
+    server: 192.168.3.200 # nfs地址
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: db-storage      #这里指定关联的PV classname
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: db-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      nodeName: mariadb-node # 指定挂到某个节点上
+      containers:
+      - name: db-app
+        image: mariadb:10.2.37
+        imagePullPolicy: IfNotPresent
+        env:                        #以下是设置MySQL数据库的密码
+        - name: MYSQL_ROOT_PASSWORD
+          value: 3Dy4y5j26
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/mysql          #MySQL容器的数据都是存在这个目录的，要对这个目录做数据持久化
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-pvc       #指定pvc的名称
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+    nodePort: 30336 # 暴露端口
+  selector:
+    app: db-app
