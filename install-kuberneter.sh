@@ -139,20 +139,22 @@ else
 fi
 
 # ------------------------------------install docker ce ---------------------------------------------
-log_info "--add-repo     https://download.docker.com/linux/centos/docker-ce.repo ..."
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+log_info "--add-repo     http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo ..."
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 if test $?; then
   log_success "--add-repo ok"
 else
   log_success "--add-repo fail"
 fi
+log_info "yum makecache fast ..."
+yum makecache fast
 
-log_info "install docker-ce-19.03.9 docker-cli-19.03.9 ..."
-yum install -y docker-ce-19.03.9 docker-cli-19.03.9
+log_info "install docker-ce ..."
+yum -y install docker-ce-19.03.9 docker-ce-cli-19.03.9
 if test $?; then
-  log_success "install docker-ce-19.03.9 docker-cli-19.03.9 ok"
+  log_success "install docker-ce ok"
 else
-  log_fail "install docker-ce-19.03.9 docker-cli-19.03.9 fail"
+  log_fail "install docker-ce fail"
 fi
 
 systemctl enable docker
