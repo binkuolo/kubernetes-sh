@@ -12,11 +12,11 @@ Centos-7.6-x86_64-DVD-1810 + kubernetes1.19.4 + docker-ce-19.03.9 + calico
 1.  `yum install -y git`
 2.  `git clone https://gitee.com/langengel/k8s-auto.git`
 3.  `cd k8s-auto`
-4.  `chmod +x kuberneter-install.sh`
+4.  `chmod +x install-kubernetes.sh`
 
 #### 使用说明
 
-1.  执行脚本 `./kuberneter-install.sh`
+1.  执行脚本 `./install-kubernetes.sh`
 2.  `set hostname default k8s-master`:设置主机名 默认为 k8s-master
 3.  `this hostname is k8s-master [y/n]？` 确定要设置就输入y 其他操作退出安装程序
 4.  `this node is master-node? [y/n] default no？` 输入y设置为主节点 输入其他都视为非主节点 非主节点将不初始化kubeadm
