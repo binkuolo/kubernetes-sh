@@ -13,6 +13,10 @@ source ~/.bashrc
 helm repo add k8s-dashboard https://kubernetes.github.io/dashboard
 helm install kubernetes-dashboard k8s-dashboard/kubernetes-dashboard --version 5.0.0 --set 'service.type=NodePort,service.nodePort=32108,nodeSelector.kubernetes\.io\/hostname=nodeName'
 ```
+查看dashboard默认token
+```
+kubectl describe secrets kubernetes-dashboard-token-hj5h5 
+```
 
 
 # Nginx-ingress 安装
