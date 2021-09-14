@@ -23,7 +23,7 @@ kubectl describe secrets kubernetes-dashboard-token-hj5h5
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-helm install nginx-ingress bitnami/nginx-ingress-controller --version 7.6.21 --set "hostNetwork=true,nodeSelector.kubernetes\.io\/hostname=nodeName"
+helm install nginx-ingress bitnami/nginx-ingress-controller --version 7.6.21 --set "hostNetwork=true,defaultBackend.enabled=false,nodeSelector.kubernetes\.io\/hostname=nodeName"
 ```
 
 # Prometheus监控
