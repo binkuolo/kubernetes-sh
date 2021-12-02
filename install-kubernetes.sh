@@ -279,8 +279,6 @@ networking:
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
 apiServer:
-  # extraArgs:
-    # service-node-port-range: "1-65535"
   extraVolumes:
   - name: "timezone"
     hostPath: "/etc/localtime"
@@ -288,27 +286,14 @@ apiServer:
     readOnly: true
     pathType: "File"
 controllerManager:
-  # extraArgs:
-  #   "node-cidr-mask-size": "20"
   extraVolumes:
-  # - name: "k8s-log"
-  #   hostPath: "/var/log/kubernetes"
-  #   mountPath: "/var/log/kubernetes"
-  #   pathType: "DirectoryOrCreate"
   - name: "timezone"
     hostPath: "/etc/localtime"
     mountPath: "/etc/localtime"
     readOnly: true
-    pathType: "File
+    pathType: "File"
 scheduler:
-  # extraArgs:
-  #   address: "0.0.0.0"
-  #   bind-address: "0.0.0.0"
   extraVolumes:
-  # - name: "k8s-log"
-  #   hostPath: "/var/log/kubernetes"
-  #   mountPath: "/var/log/kubernetes"
-  #   pathType: "DirectoryOrCreate"
   - name: "timezone"
     hostPath: "/etc/localtime"
     mountPath: "/etc/localtime"
