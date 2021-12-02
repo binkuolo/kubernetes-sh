@@ -103,6 +103,9 @@ fi
 log_info "install epel-release ... "
 yum install -y epel-release
 
+# ------------------------------------install tools  -----------------------------------------
+yum install -y yum-utils device-mapper-persistent-data lvm2 vim net-tools bash-completion nfs-utils
+
 # ------------------------------------install ipset ipvsadm -----------------------------------------
 log_info "install ipset ipvsadm ... "
 yum install -y ipset ipvsadm
@@ -127,15 +130,6 @@ if test $?; then
   log_success "set sysctl allow iptables forward, kubernetes-cri conf ok"
 else
   log_error "set sysctl allow iptables forward, kubernetes-cri conf fial"
-fi
-
-# ------------------------------------install yum tool ----------------------------------------------
-log_info "install yum-utils device-mapper-persistent-data lvm2... "
-yum install -y yum-utils device-mapper-persistent-data lvm2 vim net-tools bash-completion
-if test $?; then
-  log_success "install yum-utils device-mapper-persistent-data lvm2 ok "
-else
-  log_error "install yum-utils device-mapper-persistent-data lvm2 fail "
 fi
 
 # ------------------------------------install docker ce ---------------------------------------------
@@ -178,13 +172,6 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
  "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
-
-# sudo systemctl daemon-reload
-# if test $?; then
-#  log_success "daemon-reload ok "
-# else
-#   log_fail "daemon-reload fail"
-# fi
 
 sudo systemctl restart docker
 if test $?; then
@@ -254,15 +241,12 @@ else
   log_fail "time synchronization fail"
 fi
 
-# ------------------------------------kubectl completion bash ---------------------------------------
-echo "source <(kubectl completion bash)" >>~/.bashrc
-source ~/.bashrc
-if test $?; then
-  log_success "kubectl completion bash ok "
-else
-  log_fail "kubectl completion bash fail"
-fi
 
+# ------------------------------------completion bash ---------------------------------------
+log_info "completion bash ..."
+kubeadm completion bash > /etc/bash_completion.d/kubeadm
+kubectl completion bash > /etc/bash_completion.d/kubectl
+source ~/.bashrc
 # ------------------------------------kubeadm init config--------------------------------------------
 
 if test "$IS_MASTER" = "y"; then
