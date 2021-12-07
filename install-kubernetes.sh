@@ -319,7 +319,8 @@ EOF
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
   # ------------------------------------kube-proxy-calico --------------------------------------------------
   log_info "apply kube-proxy..."
-  kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  # kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  kubectl apply -f ./alico.yaml
   if test $?; then
     log_success "kube-proxy install ok "
   else
