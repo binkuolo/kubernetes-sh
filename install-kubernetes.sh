@@ -320,7 +320,7 @@ EOF
   # ------------------------------------kube-proxy-calico --------------------------------------------------
   log_info "apply kube-proxy..."
   # kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-  kubectl apply -f ./alico.yaml
+  kubectl apply -f ./calico.yaml
   if test $?; then
     log_success "kube-proxy install ok "
   else
