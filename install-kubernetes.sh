@@ -285,6 +285,10 @@ apiServer:
     mountPath: "/etc/localtime"
     readOnly: true
     pathType: "File"
+  certSANs:
+  - "10.100.1.1"
+  - "10.100.1.2"
+  - "k8s.test.com"
 controllerManager:
   extraVolumes:
   - name: "timezone"
