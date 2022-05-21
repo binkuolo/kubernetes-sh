@@ -8,11 +8,12 @@ Centos-7.6-x86_64-DVD-1810 + kubernetes1.19.4 + docker-ce-19.03.9 + calico
 
 
 #### 安装教程
-
-1.  `yum install -y git`
-2.  `git clone https://gitee.com/langengel/k8s-auto.git`
-3.  `cd k8s-auto`
-4.  `chmod +x install-kubernetes.sh`
+```shell
+yum install -y git
+git clone https://github.com/binkuolo/k8s-shell.git
+cd k8s-auto
+chmod +x install-kubernetes.sh
+```
 
 #### 使用说明
 
